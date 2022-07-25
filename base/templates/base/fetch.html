@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>FETCH DATA:</h1>
+    <p>data comming...</p>
+    <a style="background-color: #456;color:white;" onclick="ajaxData()">Press me!</a>
+
+    
+</body>
+<script>
+
+
+/* GET TOKEN */
+
+var getToken = async() => {
+        var value = null; 
+        var data = await window.cookieStore.getAll();
+        for (let i=0; i<data.length;i++) {
+
+            if (data[i].name == "csrftoken"){
+                value = data[i].value;
+                
+            }
+        }
+        return value;   
+}
+
+
+/* FETCH */
+var fetchData = async() =>{
+    var msg = JSON.stringify({
+        "name":"Both hands on back, when I tap it, gab it and slap it."
+    });
+    const TOKEN = await getToken();
+    
+    var data_from_response_raw = await fetch(url=(window.location),{
+        method: 'POST',
+        // credentioals : 'include' -> all origins
+        credentials: 'include' ,
+        headers: {
+            'Content-Type': 'appliaction/json',
+            "X-CSRFToken": TOKEN, 
+        },
+        body: msg,
+    });
+    // return json obj (not sure why I need to use await everywhere)
+    return await data_from_response_raw.json();
+    
+
+    
+
+}
+
+/* AJAX */
+
+var ajaxData = async() => {
+    var msg = JSON.stringify({
+        "name":"Both hands on back, when I tap it, gab it and slap it."
+    });
+    const TOKEN = await getToken();
+
+    var ajax = new XMLHttpRequest();
+    // check if ready
+    ajax.onreadystatechange = () => {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+        JSON.parse(ajax.responseText);
+        
+        }
+    };
+    ajax.open('POST',window.location);
+    ajax.setRequestHeader('Content-Type',"application/json");
+    ajax.setRequestHeader('X-CSRFToken',TOKEN);
+    ajax.send(msg)
+}
+
+</script>
+</html>

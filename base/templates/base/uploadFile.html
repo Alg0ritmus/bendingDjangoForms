@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploading files:</title>
+</head>
+<body>
+    <h1>Upload files</h1>
+    <form action="{% url 'base:uploadFile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}} <br> <br>
+        <input type="submit" value="Submit!">
+    </form>
+    <br><hr><br>
+    <h1>Upload multiple files</h1>
+    <form action="{% url 'base:uploadMultipleFiles' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{multiform}} <br> <br>
+        <input type="submit" value="Submit!">
+    </form>
+</body>
+</html>

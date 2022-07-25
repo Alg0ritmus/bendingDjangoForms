@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'base/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Formset for models test page:</h1>
+
+    <form action="{% url 'base:modelFormSets' %}" method="POST">
+        {% csrf_token %}
+        <!-- MANAGEMENT FORM JE POTREBNY NA CUSTOM VYPIS/ SPRACPVANIE UDAJOV -->
+        {{ modelFormSets.management_form }}
+        {% for form in modelFormSets %}
+            {{form}}<br>
+        {% endfor %}
+        <input type="submit" value="Post!">
+    </form>
+    <br><br>
+    <br><br>
+    <h1>update:</h1>
+    
+   
+
+    
+</body>
+</html>
