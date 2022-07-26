@@ -16,6 +16,11 @@ import os
 
 # dealing with restriction to static files
 from django.views.static import serve
+
+
+# changing name of uploaded files
+import uuid
+import hashlib
 # Create your views here.
 
 # POST - form + add to DB
@@ -194,6 +199,7 @@ def uploadMultipleFiles(request):
         files = request.FILES.getlist('pdf_file')
         if form_w_multi_files.is_valid():
             for f in files:
+                f.name  = str(uuid.uuid1())+hashlib.sha224().hexdigest()[:10] + f.name
                 individual_file = UploadFile(pdf_file=f)
                 individual_file.save()
             return redirect('base:uploadMultipleFiles')
