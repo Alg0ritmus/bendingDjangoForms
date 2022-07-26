@@ -13,6 +13,9 @@ import datetime
 from django.core.files.storage import default_storage
 from django.conf import settings
 import os
+
+# dealing with restriction to static files
+from django.views.static import serve
 # Create your views here.
 
 # POST - form + add to DB
@@ -222,3 +225,12 @@ def deleteAllFiles(request):
         file.delete()
     
     return render(request,'base/uploadFIle.html')
+
+# access files only if u are authenticated || check urls
+# https://docs.djangoproject.com/en/4.0/ref/views/#django.views.static.serve
+# https://github.com/django/django/blob/7bdb682215de3bf7f8f38f8161b175c225ee25fa/django/views/static.py#L17
+def restrictedFiles(request,mypath):
+    if request.user.is_authenticated:
+        return serve(request,mypath,document_root=settings.MEDIA_ROOT)
+    else:
+        return redirect('base:home')

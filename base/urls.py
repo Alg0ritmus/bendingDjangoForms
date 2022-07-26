@@ -1,5 +1,5 @@
 from django import views
-from django.urls import path
+from django.urls import path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -19,8 +19,12 @@ urlpatterns = [
     path('uploadFile/', views.uploadFile, name='uploadFile'),
     path('uploadMultipleFiles/', views.uploadMultipleFiles, name='uploadMultipleFiles'),
     path('deleteAllFiles/', views.deleteAllFiles, name='deleteAllFiles'),
+    re_path(r'^restrictedFiles/(?P<mypath>.*)$',views.restrictedFiles, name= 'restrictedFiles'), 
     
 ]
+
+# re_path to resolve path: https://docs.djangoproject.com/en/4.0/ref/views/#django.views.static.serve
+
 
 # make path for get req
 # https://docs.djangoproject.com/en/4.0/howto/static-files/#serving-uploaded-files-in-development
